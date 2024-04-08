@@ -15,7 +15,7 @@ defmodule G1TkitWeb.UserLoginLive do
         </:subtitle>
       </.header>
 
-      <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
+      <.simple_form for={@form} id="login_form" action={~p"/users/log_in"}  phx-update="ignore">
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 
@@ -33,7 +33,7 @@ defmodule G1TkitWeb.UserLoginLive do
       </.simple_form>
     </div>
     """
-  end
+  end 
 
   def mount(_params, _session, socket) do
     email = live_flash(socket.assigns.flash, :email)

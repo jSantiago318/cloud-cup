@@ -67,6 +67,7 @@ defmodule G1TkitWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{G1TkitWeb.UserAuth, :ensure_authenticated}] do
       live "/home", HomeLive, :index
+      live "/game", GameLive, :game
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

@@ -13,14 +13,26 @@ defmodule G1TkitWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <h1>Welcome to Gen1 TKit!</h1>
-    <p>
-      This is a simple example of a LiveView page.
-    </p>
-    <.button type="button" phx-click={show_modal("new-post-modal")}>Create Post</.button>
+    <div class="flex flex-row">
+    <!-- Modal toggle -->
+    <button
+      class="block text-white bg-blue-700 m-1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      type="button"
+      phx-click="goto-game"
+    >
+      Start Game
+    </button>
+    <!-- Main modal -->
+    <button
+      type="button"
+      class="block text-white bg-blue-700 m-1  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      phx-click={show_modal("new-post-modal")}
+    >
+      New Post
+    </button>
+    </div>
 
     <div id="feed" phx-update="stream" class="flex flex-col gap-2">
-    
       <div
         :for={{dom_id, post} <- @streams.posts}
         id={dom_id}
@@ -31,7 +43,6 @@ defmodule G1TkitWeb.HomeLive do
         <p><%= post.caption %></p>
       </div>
     </div>
-  <%!--  --%>
     <.modal id="new-post-modal">
       <.simple_form for={@form} phx-change="validate" phx-submit="save-post">
         <.live_file_input upload={@uploads.image} required />
@@ -66,6 +77,17 @@ defmodule G1TkitWeb.HomeLive do
   def handle_event("validate", _params, socket) do
     {:noreply, socket}
   end
+
+
+  @impl true
+  def handle_event("goto-game", _params, socket) do
+    socket = 
+      socket
+      |> push_navigate(to: ~p"/game")
+
+    {:noreply, socket}
+  end
+ 
 
   def handle_event("save-post", %{"post" => post_params}, socket) do
     %{current_user: user} = socket.assigns
