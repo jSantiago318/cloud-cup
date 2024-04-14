@@ -1,39 +1,48 @@
 import Phaser from "phaser";
-import { preload } from "./game/preload";
+import {Socket} from "phoenix";
+// get email from socket 
 
-function getScreenW() {
-  var width = window.innerWidth > 0 ? window.innerWidth : screen.width;
-  return width * 0.95;
-}
-
-function getScreenH() {
-  var height = window.innerHeight > 0 ? window.innerHeight : screen.height;
-  return height * 0.7;
-}
-
-class Menu extends Phaser.Scene {
+export class Game extends Phaser.Scene {
   constructor() {
-    super("menu");
-    this.cursors = null;
-    this.selectedButtonIndex = 3;
-    this.preload = preload;
+    super(
+      {
+        key: "Game"
+      }
+    );
   }
 
-  // ... rest of the Menu class methods ...
+  preload(){
+    this.load.spritesheet("cat01_walk", "/images/catset_assets/catset_spritesheets/cat01_spritesheets/cat01_walk_strip8.png", {
+      frameWidth: 320,
+      frameHeight: 40
+    });
+
+    this.load.spritesheet("cat01_run", "/images/catset_assets/catset_spritesheets/cat01_spritesheets/cat01_run_strip4.png", {
+      frameWidth: 160,
+      frameHeight: 40
+    });
+
+    this.load.spritesheet("cat01_idle", "/images/catset_assets/catset_spritesheets/cat01_spritesheets/cat01_idle_strip8.png", {
+      frameWidth: 320,
+      frameHeight: 40
+    });
+
+    this.load.image("background", "/images/full version/ui/button maker.png");
+
+    this.load.image("ui_all", "/images/full version/ui/UI_all.png");
+    this.load.image("interior_all", "/images/interior full 2/global.png");
+
+    this.load.image("mui_1","/images/modernuserinterface-win 2/48x48/Modern_UI_Style_1_48x48.png")
 
 }
 
-class Demo extends Phaser.Scene {
-  constructor() {
-    super({ key: "demo" });
-    this.imageID = null;
-    this.tab = null;
+  init(data) {
+    this.email = data.email;
   }
 
-  // ... rest of the Demo class methods ...
+  create() {
+    this.add.text(100, 100, "Hello, "+ this.email, {fill: "#0f0"});
+    // this.add.text(100, 100, email, {fill: "#0f0"});
 
+  }
 }
-  
-
-// export all
-export { Menu, Demo };

@@ -1,20 +1,20 @@
-<section class="bg-white dark:bg-gray-900">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl max-h-screen-xl text-center lg:py-16 lg:px-12">
+<section class="bg-white  dark:bg-gray-900">
+
+
+<%= if @current_user do %>
+<%!-- phaser div  --%>
+<div id="config" class="  centered">
+  <div id="game"  ></div>
+</div>
   
-    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-      Welcome to Typing Kitties
-    </h1>
-    <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-    An indie project to help you improve your typing skills and take car of your virtual cat(s).
-     </p>
-   
-   <button class="px-8 py-3 font-semibold text-white transition-colors duration-200 transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
-     <a href="/users/register">Get Started</a>
-    </button>
-
-
-   
+  <% else %>
+  <div class="container mx-auto px-4 py-12">
+   <p class="text-center text-2xl font-bold text-gray-800 dark:text-gray-100">Please sign in to play the game</p>
   </div>
+  <% end %>
+
+
+
 </section>
 
 

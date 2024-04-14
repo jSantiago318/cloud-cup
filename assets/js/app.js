@@ -19,22 +19,30 @@ import "flowbite/dist/flowbite.phoenix.js";
 import "phoenix_html"
 import "phaser"
 
+import {Game} from "./Game";
 import {LiveSocket} from "phoenix_live_view"
-import { Menu } from "./game";
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 
-// import topbar from "../vendor/topbar"
+// menu init  
+const config ={
+    type: Phaser.AUTO,
+    width: '70%',
+    height: '70%',
+    parent: "game",
+    scene: [Game]
+}
+
+// new Phaser.Game(config)
+// add to game element id
+if (document.getElementById('game')) {
+    new Phaser.Game(config);
+    
+}
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
 
-// Show progress bar on live navigation and form submits
-// topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
-// window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
-// window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
-
- 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
 
@@ -44,23 +52,3 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 
 window.liveSocket = liveSocket
-
- 
-
-//   const config = {
-//     type: Phaser.AUTO,
-//     width: window.innerWidth * 0.8,
-//     height: window.innerHeight * 0.8,
-//     parent: 'phaser',
-//     scene: Menu
-//   };
-
-//   const game = new Phaser.Game(config);
-
-//   console.log(game);
-//   const el = document.getElementById('phaser');
- 
-
-
-// // Find the Phaser element
-// const phaser = document.getElementById("phaser");

@@ -3,6 +3,16 @@ defmodule G1TkitWeb.GameLive do
   alias G1Tkit.Posts.Post
   alias G1Tkit.Posts
 
+  # validate if user is connected
+  @impl true
+  def validate_connect(_params, _session, socket) do
+    if connected?(socket) do
+      {:ok, socket}
+    else
+      {:error, %{reason: "unauthorized"}}
+    end
+  end
+
   @impl true
   def render(%{loading: true} = assigns) do
     ~H"""

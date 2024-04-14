@@ -3,6 +3,9 @@ defmodule G1TkitWeb.HomeLive do
   alias G1Tkit.Posts.Post
   alias G1Tkit.Posts
 
+
+  
+
   @impl true
   def render(%{loading: true} = assigns) do
     ~H"""
@@ -54,7 +57,8 @@ defmodule G1TkitWeb.HomeLive do
   end
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
+
     if connected?(socket) do
       form =
         %Post{}
