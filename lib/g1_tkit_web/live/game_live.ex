@@ -3,7 +3,6 @@ defmodule G1TkitWeb.GameLive do
   alias G1Tkit.Posts.Post
   alias G1Tkit.Posts
 
-  # validate if user is connected
   @impl true
   def validate_connect(_params, _session, socket) do
     if connected?(socket) do

@@ -1,15 +1,17 @@
-import { Main } from "./game/Main";
 import Phaser from "phaser";
 import { Socket } from "phoenix";
 // get email from socket
 
-export class Game extends Phaser.Scene {
+
+
+export class Creator extends Phaser.Scene {
   constructor() {
     super({
-      key: "Game",
+      key: "Creator",
     });
   }
-
+  
+  
   preload() {
     this.load.spritesheet(
       "cat01_walk",
@@ -48,39 +50,18 @@ export class Game extends Phaser.Scene {
       "/images/modernuserinterface-win 2/48x48/Modern_UI_Style_1_48x48.png"
     );
   }
+  
+   
 
-  init() {
-    // check if file save json exists in local storage
-    if (localStorage.getItem("save") === null) {
-      // if not, create a new file save json
-      localStorage.setItem(
-        "save",
-        JSON.stringify({
-          email: "",
-          cats: [],
-          ui: [],
-          interior: [],
-          activity: 'Game'
-        })
-      );
-      console.log("save created");
-    } else {
-      console.log("save exists");
-
-      // if it does, load the save json
-      const save = JSON.parse(localStorage.getItem("save"));
-      console.log(save);
-    }
-    
-
+  init(data) {
+    this.email = data.email;
   }
 
   create() {
-    this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3, "Typing Kitties", {
+    this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3, "Creator", {
       fill: "#0f0",
       fontSize: "24px",
     });
-    // this.add.text(100, 100, email, {fill: "#0f0"});
     const start_btn = this.add
     .image(
       this.game.canvas.width / 2,
@@ -101,26 +82,8 @@ export class Game extends Phaser.Scene {
       start_btn.y -= 5;
       // lighten the button
       start_btn.clearTint();
-      this.scene.start("Main", { email: this.email });
+      this.scene.start("Game");
     });
-
-    const creator_btn = this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 2 + 100, "Creator Mode", {
-      fill: "#0f0",
-      fontSize: "24px",
-    });
-    creator_btn.setInteractive();
-    creator_btn.on("pointerdown", () => {
-      creator_btn.y += 5;
-      creator_btn.tintBottomRight = 0x404040;
-    });
-    creator_btn.on("pointerup", () => {
-      creator_btn.y -= 5;
-      creator_btn.clearTint();
-      this.scene.start("Creator", { email: this.email });
-    });
-    
-    
-
     
     
   }

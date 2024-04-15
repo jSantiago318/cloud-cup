@@ -1,12 +1,9 @@
-import { Main } from "./game/Main";
 import Phaser from "phaser";
-import { Socket } from "phoenix";
-// get email from socket
 
-export class Game extends Phaser.Scene {
+export class Demo extends Phaser.Scene {
   constructor() {
     super({
-      key: "Game",
+      key: "Demo",
     });
   }
 
@@ -15,8 +12,9 @@ export class Game extends Phaser.Scene {
       "cat01_walk",
       "/images/catset_assets/catset_spritesheets/cat01_spritesheets/cat01_walk_strip8.png",
       {
-        frameWidth: 320,
+        frameWidth: 40,
         frameHeight: 40,
+        endFrame: 8,
       }
     );
 
@@ -24,8 +22,9 @@ export class Game extends Phaser.Scene {
       "cat01_run",
       "/images/catset_assets/catset_spritesheets/cat01_spritesheets/cat01_run_strip4.png",
       {
-        frameWidth: 160,
+        frameWidth: 40,
         frameHeight: 40,
+        endFrame: 4,
       }
     );
 
@@ -33,8 +32,9 @@ export class Game extends Phaser.Scene {
       "cat01_idle",
       "/images/catset_assets/catset_spritesheets/cat01_spritesheets/cat01_idle_strip8.png",
       {
-        frameWidth: 320,
+        frameWidth: 40,
         frameHeight: 40,
+        endFrame: 8,
       }
     );
 
@@ -60,7 +60,7 @@ export class Game extends Phaser.Scene {
           cats: [],
           ui: [],
           interior: [],
-          activity: 'Game'
+          activity: 'Demo'
         })
       );
       console.log("save created");
@@ -76,7 +76,38 @@ export class Game extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3, "Typing Kitties", {
+
+    // animation cat01
+    this.cat01 = this.add.sprite(100,200, "cat01_walk").setScale(3);
+    this.anims.create({
+      key: "cat01_walk",
+      frames: this.anims.generateFrameNumbers("cat01_walk", { start: 0, end: 8 }),
+      delay: 0,
+      duration: 1000,
+      repeat: -1,
+    });
+
+    // tween that takes a random duration from 2-6 seconds
+    this.tweens.add({
+      targets: this.cat01,
+      x: 500,
+      duration: 2000 + Math.random() * 4000,
+      repeat: -1,
+      destroyOnComplete: true,
+    });
+
+    this.cat01.anims.play("cat01_walk");
+
+    // animation cat01_run
+    
+    
+  
+
+
+
+
+
+    this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3, "Typing Kitties Demo", {
       fill: "#0f0",
       fontSize: "24px",
     });
