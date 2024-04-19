@@ -40,7 +40,14 @@ const config_demo ={
     width: '85%',
     height: '90%',
     parent: "demo",
-    scene: Demo
+    scene: Demo, 
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    }
 }
 
 // new Phaser.Game(config)

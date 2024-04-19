@@ -2,23 +2,24 @@
 <html lang="en" class="[scrollbar-gutter:stable]">
   <head>
     <meta charset="utf-8" />
+   
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · 🐱">
+    <.live_title prefix="🐱">
       <%= assigns[:page_title] || "TypingKitties" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script> 
- 
-<%!-- <style media='screen' type='text/css'>
-      @font-face {
-        font-family: Heartbit;
-        src: url('/priv/static/Heartbit2/HeartbitXX.ttf');
-        font-weight:400;
-        font-weight:normal;
-      }
-</style> --%>
-
+    <%!-- run script from ./lib/fontLoader --%>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Droid Sans', 'Archivo Black', 'Nunito']
+    }
+  });
+</script>
   </head>
   <body class="bg-white antialiased">
     <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
