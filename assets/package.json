@@ -3,5 +3,8 @@
     "flowbite": "^2.3.0",
     "phaser": "^3.80.1",
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.4.4"
   }
 }

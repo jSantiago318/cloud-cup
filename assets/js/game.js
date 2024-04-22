@@ -1,13 +1,14 @@
 import { Main } from "./game/Main";
 import Phaser from "phaser";
 import { Socket } from "phoenix";
+
 // get email from socket
 
 export class Game extends Phaser.Scene {
   constructor() {
-    super({
-      key: "Game",
-    });
+    super("Game");
+
+    this.loaded = false;
   }
 
   preload() {
@@ -42,86 +43,61 @@ export class Game extends Phaser.Scene {
     this.load.image("start_btn", "/images/full version/ui/start_btn.png");
     this.load.image("ui_all", "/images/full version/ui/UI_all.png");
     this.load.image("interior_all", "/images/interior full 2/global.png");
-
+    this.load.tilemapTiledJSON("island_1", "/images/tiled/interior_map.json");
     this.load.image(
       "mui_1",
       "/images/modernuserinterface-win 2/48x48/Modern_UI_Style_1_48x48.png"
     );
+    this.load.image("farm_ref", "/images/full version/global.png");
+    this;
   }
 
-  init() {
+  init(data) {
     // check if file save json exists in local storage
-    if (localStorage.getItem("save") === null) {
-      // if not, create a new file save json
-      localStorage.setItem(
-        "save",
-        JSON.stringify({
-          email: "",
-          cats: [],
-          ui: [],
-          interior: [],
-          activity: 'Game'
-        })
-      );
-      console.log("save created");
-    } else {
-      console.log("save exists");
+    this.username = data.username;
+    this.cats = data.cats;
 
-      // if it does, load the save json
-      const save = JSON.parse(localStorage.getItem("save"));
-      console.log(save);
-    }
-    
-
+    // join channel with username
   }
 
+  //     this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3, "Typing Kitties", {
+  //       fill: "#0f0",
+  //       fontSize: "24px",
+  //     });
+  // // current username
+  //     this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3 + 50, this.username, {
+  //       fill: "#0f0",
+  //       fontSize: "24px",
+  //     });
+  //     this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3 + 100, this.cats, {
+  //       fill: "#0f0",
+  //       fontSize: "24px",
+  //     });
   create() {
-    this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 3, "Typing Kitties", {
+    const map = this.make.tilemap({
+      key: "island_1",
+      tileWidth: 16,
+      tileHeight: 16,
+    });
+    const tileset = map.addTilesetImage("global", "interior_all");
+    const layer = map.createLayer(
+      "test",
+      tileset,
+      0,0
+    ).setScale(1.5);
+
+    //  icon for online status
+    this.add.text(100, 100, "Typing Kitties", {
       fill: "#0f0",
       fontSize: "24px",
     });
-    // this.add.text(100, 100, email, {fill: "#0f0"});
-    const start_btn = this.add
-    .image(
-      this.game.canvas.width / 2,
-      this.game.canvas.height / 2,
-      "start_btn"
-    )
-    .setScale(1.5)
-
-    start_btn.setInteractive();
-    start_btn.on("pointerdown", () => {
-      // move slightly down when clicked
-      start_btn.y += 5;
-      // darken the button
-      start_btn.tintBottomRight = 0x404040;
-    });
-    start_btn.on("pointerup", () => {
-      // move back up when released
-      start_btn.y -= 5;
-      // lighten the button
-      start_btn.clearTint();
-      this.scene.start("Main", { email: this.email });
-    });
-
-    const creator_btn = this.add.text(this.game.canvas.width / 2 - 100, this.game.canvas.height / 2 + 100, "Creator Mode", {
+    this.add.text(100, 150, this.username, {
       fill: "#0f0",
       fontSize: "24px",
     });
-    creator_btn.setInteractive();
-    creator_btn.on("pointerdown", () => {
-      creator_btn.y += 5;
-      creator_btn.tintBottomRight = 0x404040;
+    this.add.text(100, 200, this.cats, {
+      fill: "#0f0",
+      fontSize: "24px",
     });
-    creator_btn.on("pointerup", () => {
-      creator_btn.y -= 5;
-      creator_btn.clearTint();
-      this.scene.start("Creator", { email: this.email });
-    });
-    
-    
-
-    
-    
   }
 }

@@ -4,9 +4,7 @@ import { Socket } from "phoenix";
 
 export class Main extends Phaser.Scene {
   constructor() {
-    super({
-      key: "Main",
-    });
+    super("Main");
   }
  
   preload() {

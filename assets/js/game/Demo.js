@@ -1,25 +1,38 @@
+import { Game } from "phaser";
 import Phaser from "phaser";
 export class Demo extends Phaser.Scene {
+  
   constructor() {
-    super({
-      key: "Demo",
-    });
+    const randomUsername = () => {
+      const adjectives = [
+        "Adventurous",
+        "Brave",
+        "Calm" ]
+      const nouns = [
+        "Cat",
+        "Dog",
+        "Bird"]
+      const randomAdj = adjectives[Math.floor(Math.random() * adjectives.length)];
+      const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+      return `${randomAdj} ${randomNoun}`;
+    }
+    super("Demo");
     // username
-    this.username = this.randomUsername();
+    this.username = randomUsername();
     // modal state
     this.modal = false;
     // cat01
-    this.user_cat01 = 101;
+    this.user_cat01 = [101];
     this.cursors = null;
     this.start_btn = null;
     this.player_opt = null;
     
     this.total_entities = 0;
     this.destroy_count = 0;
+  
   }
-  randomUsername = () => {
-    return "user" + Math.floor(Math.random() * 1000);
-  };
+  
+
 
   preload() {
           this.load.spritesheet(
@@ -95,25 +108,27 @@ export class Demo extends Phaser.Scene {
 
   init() {
     // check if file save json exists in local storage
-    if (localStorage.getItem("save_random") === null) {
+    if (localStorage.getItem("tkit_us") === null) {
       // if not, create a new file save json
       localStorage.setItem(
-        "save_random",
+        "tkit_us", 
+        // this.username
         JSON.stringify({
-          email: "default",
           username: this.username,
-          cat: 101,
-          ui: [],
-          interior: [],
-          activity: "Demo",
+          cat: this.user_cat01,
+          score: 0,
+          level: 0,
+          time: 0,
         })
       );
+      // save this current scene state
+        
       console.log("save created");
     } else {
       console.log("save exists");
 
       // if it does, load the save json
-      const save = JSON.parse(localStorage.getItem("save_random"));
+      const save = JSON.parse(localStorage.getItem("tkit_us"));
       console.log(save);
     }
 
@@ -132,12 +147,12 @@ export class Demo extends Phaser.Scene {
     this.time.addEvent({
       delay: 100,
       callback: () => {
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 10; i++) {
           const randomY = Math.floor(Math.random() * this.game.canvas.height);
       // random speed range [30% -> 85%]
     const randomSpeed = 0.3 + Math.random() * 0.15;
-          spawnCat01.call(this, randomY, randomSpeed);
-          this.total_entities += 1;
+    this.spawnCat("02", randomY, randomSpeed);
+    this.total_entities += 1;
           total_entites.setText(this.total_entities);
         }     
 
@@ -149,11 +164,12 @@ export class Demo extends Phaser.Scene {
     this.time.addEvent({
       delay: 100,
       callback: () => {
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 10; i++) {
           const randomY = Math.floor(Math.random() * this.game.canvas.height);
 // random speed range [40% -> 75%]
 const randomSpeed = 0.3 + Math.random() * 0.45;
-          spawnCat02.call(this, randomY, randomSpeed);
+          // spawnCat02.call(this, randomY, randomSpeed);
+          this.spawnCat("01", randomY, randomSpeed);
           this.total_entities += 1;
           total_entites.setText(this.total_entities);
         }
@@ -161,41 +177,7 @@ const randomSpeed = 0.3 + Math.random() * 0.45;
       repeat: -1,
     });
 
-    const spawnCat01 = (y, speed) => {
-      const cat01 = this.add.sprite(-10, y, "cat01_walk").setScale(2.5).setDepth(-10)
-    cat01.anims.play("cat01_walk");
-    // tween cat01 to move from left to right, destroy when out of screen and add to destroy count
-    this.tweens.add({
-      targets: cat01,
-      x: this.game.canvas.width,
-      duration: 20000 ,
-      destroy: true,
-      repeat: 0,
-      onComplete: () => {
-        this.destroy_count += 1;
-        current_enties.setText(this.total_entities - this.destroy_count);
-        cat01.destroy();
-      }
-   
-    })
-  }
-  
-    const spawnCat02 =( y, speed) => {
-      const cat02 = this.add.sprite(-10, y, "cat02_walk").setScale(2.5).setDepth(-10);
-    cat02.anims.play("cat02_walk");
-    this.tweens.add({
-      targets: cat02,
-      x:  this.game.canvas.width,
-      duration: 20000 ,
-      repeat: 0,
-      onComplete: () => {
-        this.destroy_count += 1;
-        current_enties.setText(this.total_entities - this.destroy_count);
-        cat02.destroy();
-      }
-    })
-   
-  }
+     
   }
 
   create() {
@@ -278,22 +260,23 @@ const randomSpeed = 0.3 + Math.random() * 0.45;
     const layer = map.createLayer(
       "tile_lay_1",
       tileset,
-      this.game.canvas.clientWidth * 0.15,
-      this.game.canvas.height * 0.01
+      this.game.canvas.width * 0.15,
+      this.game.canvas.height * 0.05
     );
   
     const title = map.createLayer(
       "title",
       tileset,
-      this.game.canvas.clientWidth * 0.15,
-      this.game.canvas.height * 0.01
+      this.game.canvas.width * 0.15,
+      this.game.canvas.height * 0.05
     ).setScale(1);
 
     // add text to title
 const title_text = this.add.text(
-      this.game.canvas.width / 2 - 200,
-      this.game.canvas.height / 4 + 40,
-      "Typing Kitties",
+    // show on top of title
+    this.game.canvas.width / 2 - 100,
+    this.game.canvas.height / 3,
+      "Typing Kitties", //FIXME: centralize title ?dynamic centering?
       {
         fontFamily: "Nunito",
         // bold
@@ -318,8 +301,14 @@ const title_text = this.add.text(
     this.start_btn.on("pointerup", () => {
       this.start_btn.setTexture("btn_def");
       this.start_btn.clearTint();
-      // this.scene.start("GameScene");
-    });
+
+      let sceneManager = this.scene;
+      let sceneKeys = sceneManager.keys;
+      
+this.scene.start("Game", {username: this.username, cats: this.user_cat01});
+this.scene.stop("Demo");
+    // FIXME: if texture is not found before render on object, set to invisible or remove
+    })
     this.start_btn.text = this.add.text(
       this.start_btn.x - 30,
       this.start_btn.y - 10,
@@ -330,6 +319,16 @@ const title_text = this.add.text(
         fontSize: "18px",
       }
     ).setDepth(10);
+    
+
+    // FIXME: add keyboard input
+    // this.input.keyboard.on("keydown-SPACE", () => {
+    //   this.scene.start("Main");
+    // });
+    
+
+
+
 
     this.player_opt = this.add.image(
       this.game.canvas.width / 2 - 50,
@@ -344,6 +343,8 @@ const title_text = this.add.text(
     this.player_opt.on("pointerup", () => {
       this.time.delayedCall(100, () => {
         this.player_opt.setTexture("btn_def");
+        // change modal
+        this.modal = true;
         this.player_opt.clearTint();
       });
       // this.scene.start("GameScene");
@@ -358,6 +359,10 @@ const title_text = this.add.text(
         fontSize: "18px",
       }
     ).setDepth(10);
+
+   
+
+    
 
     const pointer = this.add.image(10, 10, "pointer").setScale(0.75).setDepth(50).setVisible(false);
     this.pointer = pointer;
@@ -376,18 +381,85 @@ const title_text = this.add.text(
     });
     }
 
+
+    
+    spawnCat = (cat_type, y, speed) => {
+      const cat = this.add.sprite(-10, y, cat_type).setScale(2.5).setDepth(-10);
+      cat.anims.play("cat" + cat_type + "_walk");
+      this.tweens.add({
+        targets: cat,
+        x: this.game.canvas.width,
+        duration: 20000,
+        repeat: 0,
+        onComplete: () => {
+          this.destroy_count += 1;
+          cat.destroy();
+        },
+      });
+    }
+
+
     update() {
 
-     
+     // if showModal is true, show modal
+     if (this.modal) {
+      // create a layer above all other layers 
+      const modal = this.add.graphics().setDepth(100);  
+      // fill modal with black color
+      modal.fillStyle(0x000000, 0.5);
+      // draw rectangle
+      modal.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+      // add text to modal
+      const modal_text = this.add.text(
+        this.game.canvas.width / 2 - 100,
+        this.game.canvas.height / 2 - 100,
+        "<-",
+        {
+          fill: "#0f0",
+          fontFamily: "Nunito",
+          fontSize: "24px",
+        }
+      ).setDepth(100);
+      modal_text.setInteractive();
+      modal_text.on("pointerdown", () => {
+        this.modal = false;
+      });
+      // uername
+      
+      const username = this.add.text(
+        this.game.canvas.width / 2 - 100,
+        this.game.canvas.height / 2 - 50,
+        this.username,
+        {
+          fill: "#0f0",
+          fontFamily: "Nunito",
+          fontSize: "24px",
+        }
+      ).setDepth(100);
+      // cats
+      const cats = this.add.text(
+        this.game.canvas.width / 2 - 100,
+        this.game.canvas.height / 2,
+        this.user_cat01,
+        {
+          fill: "#0f0",
+          fontFamily: "Nunito",
+          fontSize: "24px",
+        }
+      ).setDepth(100);  
+      
+      
+    }
+
+    const first_btn_x = this.start_btn.x;
+    const first_btn_y = this.start_btn.y;
+    const second_btn_x = this.player_opt.x;
+    const second_btn_y = this.player_opt.y;
       
       if (Phaser.Input.Keyboard.JustUp(this.cursors.up)) {
           // Up arrow key was just released
 
           // Down arrow key was just released
-          const first_btn_x = this.start_btn.x;
-          const first_btn_y = this.start_btn.y;
-          const second_btn_x = this.player_opt.x;
-          const second_btn_y = this.player_opt.y;
   
           if (this.pointer.y === first_btn_y) {
               this.pointer.y = second_btn_y;
@@ -398,11 +470,6 @@ const title_text = this.add.text(
           }
       } else if (Phaser.Input.Keyboard.JustUp(this.cursors.down)) {
           // Down arrow key was just released
-
-          const first_btn_x = this.start_btn.x;
-          const first_btn_y = this.start_btn.y;
-          const second_btn_x = this.player_opt.x;
-          const second_btn_y = this.player_opt.y;
   
           if (this.pointer.y === first_btn_y) {
               this.pointer.y = second_btn_y;
@@ -411,7 +478,27 @@ const title_text = this.add.text(
               this.pointer.y = first_btn_y;
               this.pointer.x = first_btn_x - 50;
           }
+
+          
+      } else if (Phaser.Input.Keyboard.JustUp(this.cursors.space)) {
+          // Space bar was just released
+        //  if point is in first button istart game
+        if (this.pointer.y === first_btn_y) {
+          this.start_btn.setTexture("btn_press");
+          this.start_btn.tintBottomRight =  '0xD2691E'
+          this.scene.start("Game", {username: this.username, cats: this.user_cat01});
+          this.scene.stop("Demo");
+        } else if (this.pointer.y === second_btn_y) {
+          this.player_opt.setTexture("btn_press");
+
+          this.modal = true;
+          this.player_opt.tintBottomRight = '0xD2691E';
+          
+        }
+       
       }
+
+      // if escape key is pressed, close modal
   }
 
 }

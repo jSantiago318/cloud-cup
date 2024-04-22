@@ -14,6 +14,8 @@
 //
 //     import "some-package"
 //
+// NOTE: The contents of this file will only be executed if
+import "./user_socket.js"
 import "flowbite/dist/flowbite.phoenix.js";
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
@@ -40,12 +42,12 @@ const config_demo ={
     width: '85%',
     height: '90%',
     parent: "demo",
-    scene: Demo, 
+    scene: [Demo, Game], 
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: false
+            debug: true
         }
     }
 }

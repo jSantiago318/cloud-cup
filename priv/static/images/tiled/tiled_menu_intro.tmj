@@ -110,7 +110,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":5,
+ "nextlayerid":6,
  "nextobjectid":1,
  "orientation":"orthogonal",
  "renderorder":"right-down",
@@ -129,6 +129,19 @@
          "tilecount":2623,
          "tileheight":48,
          "tilewidth":48
+        }, 
+        {
+         "columns":270,
+         "firstgid":2624,
+         "image":"..\/interior full 2\/global.png",
+         "imageheight":3440,
+         "imagewidth":4320,
+         "margin":0,
+         "name":"global",
+         "spacing":0,
+         "tilecount":58050,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":48,
  "type":"map",
