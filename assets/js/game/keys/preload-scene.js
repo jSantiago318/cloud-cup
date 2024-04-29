@@ -1,4 +1,4 @@
-import { CAT_ASSET_KEYS, CHARACTER_ASSET_KEYS, PLAYER_MOVEMENT, UI_ASSET_KEYS } from "./asset-keys";
+import { CAT_ASSET_KEYS, CHARACTER_ASSET_KEYS, FARM_ASSET_KEYS, PLAYER_MOVEMENT, UI_ASSET_KEYS } from "./asset-keys";
 
 import Phaser from "phaser";
 import { SCENE_KEYS } from "./scene-keys";
@@ -1107,6 +1107,12 @@ export class PreloadScene extends Phaser.Scene {
       `${MODERN_UI_ASSETS}/Modern_UI_Style_1_48x48.png`
     );
     this.load.image(UI_ASSET_KEYS.FARM_REF, `${UI_ELEMS}/global.png`);
+    // first 16x16 tileset == floor_grass
+    // FARM_ASSET_KEYS
+    this.load.image(FARM_ASSET_KEYS.FLOOR_GRASS, `${UI_ELEMS}/global.png`, {
+      
+    });
+    
     this.load.image(UI_ASSET_KEYS.POINTER, `${MODERN_UI_ASSETS}/pointer.png`);
   }
 
@@ -1288,6 +1294,13 @@ export class PreloadScene extends Phaser.Scene {
       duration: 1000,
       repeat: -1,
     });
+
+
+
+
+
+
+
     
     console.log(`[${PreloadScene.name}:create] log`);
     this.scene.start(SCENE_KEYS.MAIN_SCENE);

@@ -5,12 +5,13 @@ import { Socket } from "phoenix";
 
 export class Options extends Phaser.Scene {
   constructor() {
-    super({key: "Options"});
+    super({key: SCENE_KEYS.OPTIONS_SCENE});
   }
   
   
   init(data) {
     this.email = data.email;
+    console.log("Options Scene");
   }
   
   

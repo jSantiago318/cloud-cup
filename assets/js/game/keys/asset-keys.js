@@ -7,7 +7,18 @@ export const INTERIOR_ASSET_KEYS = Object.freeze({
     TABLE: "table",
 })
 export const EXTERIOR_ASSET_KEYS = Object.freeze({
-    GRASS: "grass",
+    // GRASS: "grass",
+    GRASS_CENTER: "grass_center",
+    GRASS_LEFT: "grass_left",
+    GRASS_RIGHT: "grass_right",
+    GRASS_TOP: "grass_top",
+    GRASS_TOP_LEFT: "grass_top_left",
+    GRASS_TOP_RIGHT: "grass_top_right",
+    GRASS_BOTTOM: "grass_bottom",
+    GRASS_BOTTOM_LEFT: "grass_bottom_left",
+    GRASS_BOTTOM_RIGHT: "grass_bottom_right",
+    GRASS_CENTER_LEFT: "grass_center_left",
+    GRASS_CENTER_RIGHT: "grass_center_right",
     FENCE: "fence",
     GATE: "gate",
     TREE: "tree",
@@ -145,6 +156,10 @@ export const UI_ASSET_KEYS = Object.freeze({
     MOD_UI_STYLE_1_48X48: "mod_ui_style_1_48x48",
     FARM_REF: "farm_ref",
     UI_BG: "ui_bg",
+})
+
+export const FARM_ASSET_KEYS = Object.freeze({
+    FLOOR_GRASS: "floor_grass",
 })
 
 

@@ -21,12 +21,10 @@ export class Player extends Phaser.GameObjects.Sprite {
   }
   moveUp() {
     this.player.y -= 1; 
-    // this.player.play(PLAYER_MOVEMENT.UP)
     this.update()
   }
   moveDown() {
     this.player.y += 1; 
-    // this.player.play(PLAYER_MOVEMENT.DOWN)
     this.update()
   }
   moveLeft() {

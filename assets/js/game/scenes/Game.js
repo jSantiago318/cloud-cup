@@ -1,7 +1,8 @@
-import { PLAYER_MOVEMENT, SCENE_KEYS } from "../keys/scene-keys";
+import { CHARACTER_ASSET_KEYS, FARM_ASSET_KEYS } from "../keys/asset-keys";
 
 import Phaser from "phaser";
 import {Player} from "../entities/Player.js";
+import { SCENE_KEYS } from "../keys/scene-keys";
 
 // get email from socket
 
@@ -22,6 +23,12 @@ export class Game extends Phaser.Scene {
       fill: "#0f0",
       fontSize: "24px",
     }); 
+    
+    this.grass_tile = this.add.image(0, 0, FARM_ASSET_KEYS.FLOOR_GRASS)
+    this.grass_tile.setCrop(0, 0, 48, 48).setOrigin(0, 0)
+    
+    // create a new menu
+    
 
   const menuMatrix = [
     [0, 1, 0, 0, 0],

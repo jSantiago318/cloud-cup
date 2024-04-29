@@ -16,3 +16,10 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Terminal commands
+
+```bash
+docker run --name postgres-db -e POSTGRES_PASSWORD=docker -e POSTGRES_USER=usertemp -d postgres
+
+```

@@ -1,7 +1,11 @@
+import { EXTERIOR_ASSET_KEYS, FARM_ASSET_KEYS, INTERIOR_ASSET_KEYS, UI_ASSET_KEYS } from "../keys/asset-keys";
+
+import { Cat } from "../entities/Cat";
 import { Game } from "phaser";
 import Phaser from "phaser";
 import { SCENE_KEYS } from "../keys/scene-keys";
-import { UI_ASSET_KEYS } from "../keys/asset-keys";
+import {Tile} from "../entities/Tile";
+
 export class Main extends Phaser.Scene {
   
   constructor() {
@@ -29,6 +33,7 @@ export class Main extends Phaser.Scene {
     this.cursors = null;
     this.start_btn = null;
     this.opt_btn = null;
+
     
     this.total_entities = 0;
     this.destroy_count = 0;
@@ -40,6 +45,9 @@ export class Main extends Phaser.Scene {
 
 
   init() {
+
+
+    
     // check if file save json exists in local storage
     if (localStorage.getItem("tkit_us") === null) {
       // if not, create a new file save json
@@ -65,6 +73,114 @@ export class Main extends Phaser.Scene {
       console.log(save);
     }
 
+    
+
+    this.map_matrix = [
+      [8,1,1,1,1,1,1,2],
+      [7,0,0,0,0,0,0,3],
+      [7,0,0,0,0,0,0,3],
+      [7,0,0,0,0,0,0,3],
+      [7,0,0,0,0,0,0,3],
+      [7,0,0,0,0,0,0,3],
+      [6,5,5,5,5,5,5,4], 
+    ]
+
+    // create tile_grass_top_left
+        this.tile_grass_top_left = this.add.image(0,0, UI_ASSET_KEYS.FARM_REF).setOrigin(0,0).setDepth(-10).setScale(2)
+    this.tile_grass_top_left.setCrop(0, 0, 16, 16).setVisible(false)
+    this.tile_grass_top_right = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_top_right.setCrop(16, 0, 16, 16).setVisible(false)
+    this.tile_grass_top_center = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_top_center.setCrop(32, 0, 16, 16).setVisible(false)
+    this.tile_grass_center_left = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_center_left.setCrop(0, 16, 16, 16).setVisible(false)
+    this.tile_grass_center_right = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_center_right.setCrop(32, 16, 16, 16).setVisible(false)
+    this.tile_grass_center_center = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_center_center.setCrop(16, 16, 16, 16).setVisible(false)
+    this.tile_grass_bottom_left = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_bottom_left.setCrop(0, 32, 16, 16).setVisible(false)
+    this.tile_grass_bottom_right = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_bottom_right.setCrop(32, 32, 16, 16).setVisible(false)
+    this.tile_grass_bottom_center = this.add.image(0,0,  UI_ASSET_KEYS.FARM_REF).setOrigin(0, 0).setDepth(-10).setScale(2)
+    this.tile_grass_bottom_center.setCrop(16, 32, 16, 16).setVisible(false)
+    
+
+    // obj.scene.sys.updateList.remove(pawn);
+// obj.scene.sys.displayList.remove(pawn);
+// obj.scene = scene;
+// scene.sys.updateList.add(obj);
+// scene.sys.displayList.add(obj)
+    
+// render matrix with tiles
+    for (let i = 0; i < this.map_matrix.length; i++) {
+      for (let j = 0; j < this.map_matrix[i].length; j++) {
+        const tile = this.map_matrix[i][j];
+        switch (tile) {
+          case 0:
+            const center_tile = this.tile_grass_center_center;
+            center_tile.x = i
+            center_tile.y = j
+            center_tile.setVisible(true);
+            break;
+          case 1:
+            const top_left_tile = this.tile_grass_top_left;
+            top_left_tile.x = i
+            top_left_tile.y = j
+            top_left_tile.setVisible(true);
+            break;
+          case 2:
+            const top_right_tile = this.tile_grass_top_right;
+            top_right_tile.x = i
+            top_right_tile.y = j
+            top_right_tile.setVisible(true);
+            break;
+          case 3:
+            const bottom_left_tile = this.tile_grass_bottom_left;
+            bottom_left_tile.x = i
+            bottom_left_tile.y = j
+            bottom_left_tile.setVisible(true);
+            break;
+          case 4:
+            const bottom_right_tile = this.tile_grass_bottom_right;
+            bottom_right_tile.x = i
+            bottom_right_tile.y = j
+            bottom_right_tile.setVisible(true);
+            break;
+          case 5:
+            const center_right_tile = this.tile_grass_center_right;
+            center_right_tile.x = i
+            center_right_tile.y = j
+            center_right_tile.setVisible(true);
+            break;
+          case 6:
+            const center_left_tile = this.tile_grass_center_left;
+            center_left_tile.x = i
+            center_left_tile.y = j
+            center_left_tile.setVisible(true);
+            break;
+          case 7:
+            const bottom_center_tile = this.tile_grass_bottom_center;
+            bottom_center_tile.x = i
+            bottom_center_tile.y = j
+            bottom_center_tile.setVisible(true);
+            break;
+          case 8:
+            const top_center_tile = this.tile_grass_top_center;
+            top_center_tile.x = i
+            top_center_tile.y = j
+            top_center_tile.setVisible(true);
+            break;
+          default:
+            break;
+            
+        }
+      }
+    }
+
+    
+
+  
     const total_entites =  this.add.text(10, 10 , this.total_entities, {
       fill: "#ffff",
       fontFamily: "Nunito",
@@ -106,6 +222,7 @@ export class Main extends Phaser.Scene {
         for (let i = 0; i < getRandomCat() ; i++) {
       // random speed range [30% -> 85%]
     this.spawnCat(getCat(), randomY(), getSpeed());
+          // this.cat = new Cat(this, -10, randomY(), this.username);
     this.total_entities += 1;
           total_entites.setText(this.total_entities);
         }
@@ -113,6 +230,8 @@ export class Main extends Phaser.Scene {
       loop: true,
     })
 
+
+    
 
   
 
@@ -231,15 +350,17 @@ this.scene.start(SCENE_KEYS.GAME_SCENE, {username: this.username, cats: this.use
 
     
     spawnCat = (cat_type, y, speed) => {
-      const cat = this.add.sprite(-10, y, cat_type).setScale(2.5).setDepth(-10);
+      const cat = this.add.sprite(-10, y, cat_type).setScale(2).setDepth(-10);
       if (speed > 0.5) {
         cat.anims.play("cat" + cat_type + "_run");
       } else {
         cat.anims.play("cat" + cat_type + "_walk");
       }
+      const ran_delay = [100,200,400]
       this.tweens.add({
         targets: cat,
         x: this.game.canvas.width + 50,
+        delay:  ran_delay[Math.floor(Math.random() * ran_delay.length)],
         duration: 25000 - (25000 * speed),
         repeat: 0,
         onComplete: () => {
@@ -247,6 +368,7 @@ this.scene.start(SCENE_KEYS.GAME_SCENE, {username: this.username, cats: this.use
           cat.destroy();
         },
       });
+      
 
       // collision detection with cat
       // if cats overlap push to side
