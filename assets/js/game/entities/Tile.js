@@ -8,3 +8,5 @@ class Tile extends Phaser.GameObjects.Rectangle {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+
+export default Tile;

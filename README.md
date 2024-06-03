@@ -21,5 +21,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ```bash
 docker run --name postgres-db -e POSTGRES_PASSWORD=docker -e POSTGRES_USER=usertemp -d postgres
+mix ecto
+mix deps.get
+mix phx.server
 
 ```

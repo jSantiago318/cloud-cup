@@ -17,7 +17,8 @@ defmodule G1Tkit.Application do
       # Start a worker by calling: G1Tkit.Worker.start_link(arg)
       # {G1Tkit.Worker, arg},
       # Start to serve requests, typically the last entry
-      G1TkitWeb.Endpoint    ]
+      G1TkitWeb.Endpoint
+    ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

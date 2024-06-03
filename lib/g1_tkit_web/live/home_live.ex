@@ -3,9 +3,6 @@ defmodule G1TkitWeb.HomeLive do
   alias G1Tkit.Posts.Post
   alias G1Tkit.Posts
 
-
-  
-
   @impl true
   def render(%{loading: true} = assigns) do
     ~H"""
@@ -17,22 +14,22 @@ defmodule G1TkitWeb.HomeLive do
   def render(assigns) do
     ~H"""
     <div class="flex flex-row">
-    <!-- Modal toggle -->
-    <button
-      class="block text-white bg-blue-700 m-1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      type="button"
-      phx-click="goto-game"
-    >
-      Start Game
-    </button>
-    <!-- Main modal -->
-    <button
-      type="button"
-      class="block text-white bg-blue-700 m-1  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      phx-click={show_modal("new-post-modal")}
-    >
-      New Post
-    </button>
+      <!-- Modal toggle -->
+      <button
+        class="block text-white bg-blue-700 m-1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        type="button"
+        phx-click="goto-game"
+      >
+        Start Game
+      </button>
+      <!-- Main modal -->
+      <button
+        type="button"
+        class="block text-white bg-blue-700 m-1  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        phx-click={show_modal("new-post-modal")}
+      >
+        New Post
+      </button>
     </div>
 
     <div id="feed" phx-update="stream" class="flex flex-col gap-2">
@@ -58,7 +55,6 @@ defmodule G1TkitWeb.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-
     if connected?(socket) do
       form =
         %Post{}
@@ -82,16 +78,14 @@ defmodule G1TkitWeb.HomeLive do
     {:noreply, socket}
   end
 
-
   @impl true
   def handle_event("goto-game", _params, socket) do
-    socket = 
+    socket =
       socket
       |> push_navigate(to: ~p"/game")
 
     {:noreply, socket}
   end
- 
 
   def handle_event("save-post", %{"post" => post_params}, socket) do
     %{current_user: user} = socket.assigns

@@ -4,7 +4,8 @@ import { Cat } from "../entities/Cat";
 import { Game } from "phaser";
 import Phaser from "phaser";
 import { SCENE_KEYS } from "../keys/scene-keys";
-import {Tile} from "../entities/Tile";
+
+// import {Tile} from "../entities/Tile";
 
 export class Main extends Phaser.Scene {
   
@@ -263,6 +264,7 @@ export class Main extends Phaser.Scene {
       this.game.canvas.height / 2 + 50,
       UI_ASSET_KEYS.BTN_DEF
     ).setScale(1.5).setDepth(10);
+    
     this.start_btn.setInteractive();
     this.start_btn.on("pointerdown", () => {
       this.start_btn.setTexture(UI_ASSET_KEYS.BTN_DEF_PRESS);
