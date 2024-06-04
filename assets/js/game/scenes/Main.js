@@ -35,7 +35,7 @@ export class Main extends Phaser.Scene {
     this.start_btn = null;
     this.opt_btn = null;
 
-    
+    this.notig_UI = null;
     this.total_entities = 0;
     this.destroy_count = 0;
   
