@@ -8,11 +8,22 @@
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "#6_Garage_Sales_32x32": {
+            "scaleInEditor": 1
+        }
     },
+    "last.exportedFilePath": "C:/Users/joshu/Code/cloud-cup/priv/static/images/tiled",
+    "last.imagePath": "C:/Users/joshu/Code/cloud-cup/priv/static/images/modernexteriors-win/Modern_Exteriors_32x32/ME_Theme_Sorter_32x32",
     "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JavaScript map files (*.js)",
+    "map.lastUsedFormat": "tmx",
     "openFiles": [
     ],
     "project": "tiled_proj.tiled-project",
     "recentFiles": [
-    ]
+    ],
+    "tileset.embedInMap": true
 }
